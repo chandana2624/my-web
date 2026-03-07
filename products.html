@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Products - Pixora CuteClicks</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="products-body">
+
+    <nav class="navbar solid-nav">
+        <div class="nav-container">
+            <h1 class="logo">Pixora CuteClicks</h1>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html" class="active">Products</a></li>
+                <li>
+                    <a href="#" class="cart-icon-container" onclick="toggleCart(event)">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-badge" id="cart-counter">0</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="products-header">
+        <h1>Our Products</h1>
+    </header>
+
+    <main class="products-main" id="products-container">
+        <!-- Toast Notification Container -->
+        <div id="toast-container" class="toast-container"></div>
+
+        <div class="product-grid">
+            <!-- Product 1 -->
+            <div class="product-card">
+                <div class="product-image placeholder-img-1">
+                    <!-- Placeholder div pretending to be an image -->
+                </div>
+                <h3 class="product-title">MINI POLAROIDS</h3>
+                <p class="product-price">$25</p>
+                <button class="btn-add-cart" data-name="MINI POLAROIDS" data-price="25">Add to Cart</button>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="product-card">
+                <div class="product-image placeholder-img-2">
+                    <!-- Placeholder div pretending to be an image -->
+                </div>
+                <h3 class="product-title">RING POLAROIDS</h3>
+                <p class="product-price">$40</p>
+                <button class="btn-add-cart" data-name="RING POLAROIDS" data-price="40">Add to Cart</button>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="product-card">
+                <div class="product-image placeholder-img-3">
+                    <!-- Placeholder div pretending to be an image -->
+                </div>
+                <h3 class="product-title">ACRYLIC MAGNET FRAMES</h3>
+                <p class="product-price">$60</p>
+                <button class="btn-add-cart" data-name="ACRYLIC MAGNET FRAMES" data-price="60">Add to Cart</button>
+            </div>
+
+            <!-- Product 4 -->
+            <div class="product-card">
+                <div class="product-image placeholder-img-4">
+                    <!-- Placeholder div pretending to be an image -->
+                </div>
+                <h3 class="product-title">STRIP POLAROIDS</h3>
+                <p class="product-price">$60</p>
+                <button class="btn-add-cart" data-name="STRIP POLAROIDS" data-price="60">Add to Cart</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Cart Drawer Overlay -->
+    <div id="cart-overlay" onclick="toggleCart(event)"
+        style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.35); z-index:900;">
+    </div>
+
+    <!-- Cart Drawer Sidebar -->
+    <div id="cart-drawer" class="cart-drawer">
+        <div class="cart-drawer-header">
+            <h2><i class="fas fa-shopping-bag"></i> My Cart</h2>
+            <button class="close-cart" onclick="toggleCart(event)"><i class="fas fa-times"></i></button>
+        </div>
+        <div id="cart-items-list" class="cart-items-list">
+            <p class="empty-cart-msg"><i class="fas fa-box-open"></i><br>Your cart is empty!</p>
+        </div>
+        <div class="cart-drawer-footer" id="cart-footer" style="display:none;">
+            <div class="cart-total">Total: <strong id="cart-total-price">$0</strong></div>
+            <button class="btn-submit" id="checkout-btn" style="margin-top:15px; width:100%;">Proceed to
+                Checkout</button>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="checkout-modal" class="modal-overlay" style="display:none;">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Checkout Your Cart</h2>
+            <p id="modal-product-name" style="color:var(--text-muted); margin-bottom:20px;">Reviewing your items...</p>
+
+            <form id="checkout-form">
+                <input type="hidden" id="checkout-price" value="">
+
+                <div class="form-group">
+                    <label for="checkout-name">Your Name</label>
+                    <input type="text" id="checkout-name" required placeholder="Name">
+                </div>
+                <div class="form-group">
+                    <label for="checkout-email">Your Email</label>
+                    <input type="email" id="checkout-email" required placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <label for="checkout-phone">Contact Number</label>
+                    <input type="tel" id="checkout-phone" required placeholder="Phone Number">
+                </div>
+                <div class="form-group">
+                    <label for="checkout-location">Delivery Location / Address</label>
+                    <input type="text" id="checkout-location" required placeholder="Area, City, Pincode">
+                </div>
+
+                <button type="submit" class="btn-submit">Place Order</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Order Confirmation Overlay -->
+    <div id="order-confirmation" class="order-confirm-overlay" style="display:none;">
+        <div class="order-confirm-card">
+            <div class="order-confirm-icon">🎉</div>
+            <h2>Order Placed!</h2>
+            <p class="order-confirm-sub">Thank you! Here is your order summary:</p>
+
+            <div class="order-tracking-box">
+                <div class="order-info-row">
+                    <span class="order-label">Order ID</span>
+                    <span class="order-value" id="conf-order-id">#—</span>
+                </div>
+                <div class="order-info-row">
+                    <span class="order-label">Product</span>
+                    <span class="order-value" id="conf-product">—</span>
+                </div>
+                <div class="order-info-row">
+                    <span class="order-label">Amount</span>
+                    <span class="order-value" id="conf-price">—</span>
+                </div>
+                <div class="order-info-row">
+                    <span class="order-label">Delivery To</span>
+                    <span class="order-value" id="conf-location">—</span>
+                </div>
+                <div class="order-info-row">
+                    <span class="order-label">Status</span>
+                    <span class="order-value"><span class="status-badge">✅ Order Placed</span></span>
+                </div>
+                <div class="order-info-row">
+                    <span class="order-label">Est. Delivery</span>
+                    <span class="order-value">3–5 Business Days</span>
+                </div>
+            </div>
+
+            <!-- Visual Tracking Steps -->
+            <div class="order-status-track">
+                <div class="track-step done">
+                    <div class="track-dot"></div><span>Placed</span>
+                </div>
+                <div class="track-line done"></div>
+                <div class="track-step">
+                    <div class="track-dot"></div><span>Confirmed</span>
+                </div>
+                <div class="track-line"></div>
+                <div class="track-step">
+                    <div class="track-dot"></div><span>Shipped</span>
+                </div>
+                <div class="track-line"></div>
+                <div class="track-step">
+                    <div class="track-dot"></div><span>Delivered</span>
+                </div>
+            </div>
+
+            <p class="order-confirm-note">📸 For queries, DM us on Instagram!<br>We will deliver your Polaroids with
+                love 💜</p>
+            <button class="btn-submit" onclick="closeConfirmation()">Continue Shopping</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
