@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pixora CuteClicks</title>
+    <title>Pixora_Cute.Clicks</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,15 +16,15 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 
-<body>
+<body class="home-body page-fade">
+    <div id="cursor-glow"></div>
 
     <nav class="navbar">
         <div class="nav-container">
-            <h1 class="logo">Pixora CuteClicks</h1>
+            <h1 class="logo">Pixora_Cute.Clicks</h1>
             <ul class="nav-links">
-                <li><a href="#" class="active">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Services</a></li>
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="products.html">Products</a></li>
                 <li><a href="#contact">Contact</a></li>
                 <li>
                     <a href="products.html" class="cart-icon-container">
@@ -36,48 +36,95 @@
         </div>
     </nav>
 
-    <header class="hero">
+    <!-- Premium Hero Section -->
+    <header class="parallax-hero dreamy-hero">
         <div class="hero-content">
-            <h1>Welcome to pixora_Cute.clicks</h1>
-            <p class="subtitle">~cute ~Retro ~Memories</p>
-            <a href="products.html"><button class="btn-explore">Click & Explore</button></a>
+            <h6 class="brand-reveal aesthetic-title">Turn Your Memories Into Polaroids</h6>
+            <p class="tagline">💕Cute ● Retro🤳● Memories📸</p>
+            <div class="hero-btns">
+                <a href="products.html" class="btn-primary">Explore Products</a>
+            </div>
         </div>
     </header>
 
-    <section class="features">
-        <div class="feature-container">
-            <div class="feature-item">
-                <h3>MINI POLAROIDS</h3>
-                <p>POCKETABLE KEEPSAKES</p>
+    <!-- Why Pixora? Section -->
+    <section class="why-pixora">
+        <h2 class="section-title">Why Pixora?</h2>
+        <div class="why-grid">
+            <div class="why-card glass-panel">
+                <i class="fas fa-wallet"></i>
+                <h3>Mini Pocket Memories</h3>
+                <p>Tiny Polaroids you can keep in wallets or phone cases.</p>
             </div>
-
-            <div class="feature-item middle-item">
-                <h3>RING POLAROIDS</h3>
-                <p>CIRCLE OF LOVE</p>
+            <div class="why-card glass-panel">
+                <i class="fas fa-gift"></i>
+                <h3>Cute Gift Ideas</h3>
+                <p>Bouquets, strips and rings perfect for surprises.</p>
             </div>
-
-            <div class="feature-item">
-                <h3>POLAROIDS BOUQUETS</h3>
-                <p>BUNCH OF TENDERNESS</p>
-            </div>
-
-            <div class="feature-item">
-                <h3>STRIP POLAROIDS</h3>
-                <p>MOMENTS IN ONE FRAME</p>
+            <div class="why-card glass-panel">
+                <i class="fas fa-heart"></i>
+                <h3>Made With Love</h3>
+                <p>Printed and packed carefully to keep your memories special.</p>
             </div>
         </div>
     </section>
 
-    <!-- Customer Data Form / Contact Section -->
-    <section class="contact-section" id="contact">
-        <div class="contact-container">
-            <h2>Let's Connect</h2>
-            <p>For custom orders or queries, DM us on Instagram!</p>
-            <a href="https://www.instagram.com/pixora_cute.clicks/" target="_blank" class="instagram-handle">
-                <i class="fab fa-instagram"></i> @pixora_cute.clicks
-            </a>
+    <!-- Featured Collections Section -->
+    <section class="featured-collections">
+        <h2 class="section-title">Featured Collections</h2>
+        <div class="showcase-container"
+            style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; padding: 0 20px;">
+            <!-- Mini Polaroids -->
+            <div class="showcase-card glass-panel">
+                <div class="card-shine"></div>
+                <div class="card-icon"><i class="fas fa-camera"></i></div>
+                <h3>Mini Polaroids</h3>
+                <p>The timeless pocket classic.</p>
+
+            </div>
+
+            <!-- Ring Polaroids -->
+            <div class="showcase-card glass-panel">
+                <div class="card-shine"></div>
+                <div class="card-icon"><i class="fas fa-circle-notch"></i></div>
+                <h3>Ring Polaroids</h3>
+                <p>Unique circular keepsakes.</p>
+
+            </div>
+
+            <!-- Strip Polaroids -->
+            <div class="showcase-card glass-panel">
+                <div class="card-shine"></div>
+                <div class="card-icon"><i class="fas fa-film"></i></div>
+                <h3>Strip Polaroids</h3>
+                <p>Perfect for photo-booth vibes.</p>
+
+            </div>
+
+            <!-- Gift Bouquets -->
+            <div class="showcase-card glass-panel">
+                <div class="card-shine"></div>
+                <div class="card-icon"><i class="fas fa-gift"></i></div>
+                <h3>Gift Bouquets</h3>
+                <p>A blooming stack of memories.</p>
+
+            </div>
         </div>
     </section>
+
+    <!-- Let's Connect Section -->
+    <section class="lets-connect" id="contact">
+        <div class="connect-wrapper" style="display: flex; justify-content: center; padding: 60px 20px;">
+            <div class="glass-panel" style="padding: 60px 40px; text-align: center; max-width: 600px; width: 100%;">
+                <h2 class="section-title" style="margin-bottom: 30px; margin-top: 0;">Let's Connect</h2>
+                <a href="https://www.instagram.com/pixora_cute.clicks/" target="_blank" class="instagram-handle">
+                    <i class="fab fa-instagram"></i> @pixora_cute.clicks
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <div class="shutter-overlay" id="shutter"></div>
 
     <script src="script.js"></script>
 </body>

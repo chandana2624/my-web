@@ -44,6 +44,7 @@ const db = new sqlite3.Database('./database.sqlite', (err) => {
                 delivery_location TEXT NOT NULL,
                 product_name TEXT NOT NULL,
                 price TEXT NOT NULL,
+                payment_id TEXT,
                 status TEXT DEFAULT 'Order Placed',
                 created_at DATETIME DEFAULT CURRENT_TIMESTAMP
             )`, (err) => {
@@ -90,14 +91,14 @@ app.get('/api/customers', (req, res) => {
 
 // Orders Endpoints
 app.post('/api/orders', (req, res) => {
-    const { productName, price, customerName, customerEmail, contactNumber, deliveryLocation } = req.body;
+    const { productName, price, customerName, customerEmail, contactNumber, deliveryLocation, paymentId } = req.body;
 
     if (!productName || !price || !customerName || !customerEmail || !contactNumber || !deliveryLocation) {
         return res.status(400).json({ error: 'All fields including delivery location are required.' });
     }
 
-    const sql = 'INSERT INTO orders (customer_name, customer_email, contact_number, delivery_location, product_name, price) VALUES (?, ?, ?, ?, ?, ?)';
-    db.run(sql, [customerName, customerEmail, contactNumber, deliveryLocation, productName, price], function (err) {
+    const sql = 'INSERT INTO orders (customer_name, customer_email, contact_number, delivery_location, product_name, price, payment_id) VALUES (?, ?, ?, ?, ?, ?, ?)';
+    db.run(sql, [customerName, customerEmail, contactNumber, deliveryLocation, productName, price, paymentId], function (err) {
         if (err) {
             console.error('Error inserting order:', err.message);
             return res.status(500).json({ error: 'Failed to save order.' });
@@ -110,6 +111,7 @@ app.post('/api/orders', (req, res) => {
                 product: productName,
                 price: price,
                 customerName: customerName,
+                paymentId: paymentId,
                 status: 'Order Placed',
                 estimatedDelivery: '3-5 business days'
             }

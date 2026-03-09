@@ -16,8 +16,9 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="products-body">
-
+<body class="products-body page-fade">
+    <div id="cursor-glow"></div>
+    <div class="shutter-overlay" id="shutter"></div>
     <nav class="navbar solid-nav">
         <div class="nav-container">
             <h1 class="logo">Pixora CuteClicks</h1>
@@ -35,54 +36,141 @@
     </nav>
 
     <header class="products-header">
-        <h1>Our Products</h1>
+
     </header>
 
     <main class="products-main" id="products-container">
         <!-- Toast Notification Container -->
         <div id="toast-container" class="toast-container"></div>
 
-        <div class="product-grid">
-            <!-- Product 1 -->
+        <h2 class="section-title">Our Collections</h2>
+        <div class="product-grid premium-grid">
+            <!-- Product 1: Mini Polaroids -->
             <div class="product-card">
-                <div class="product-image placeholder-img-1">
-                    <!-- Placeholder div pretending to be an image -->
+                <div class="card-shine"></div>
+                <div class="product-image-container">
+                    <img src="assets/mini.jpg" alt="Mini Polaroids" class="product-image">
                 </div>
                 <h3 class="product-title">MINI POLAROIDS</h3>
-                <p class="product-price">$25</p>
-                <button class="btn-add-cart" data-name="MINI POLAROIDS" data-price="25">Add to Cart</button>
+                <div class="variant-selector">
+                    <button class="variant-btn active" data-pack="8" data-price="99">8 Pack</button>
+                    <button class="variant-btn" data-pack="12" data-price="139">12 Pack</button>
+                </div>
+                <p class="product-price">₹99</p>
+                <button class="btn-add-cart" data-name="MINI POLAROIDS" data-price="99" data-pack="8">
+                    <span>Add to Cart</span>
+                </button>
             </div>
 
-            <!-- Product 2 -->
+            <!-- Product 2: Ring Polaroids -->
             <div class="product-card">
-                <div class="product-image placeholder-img-2">
-                    <!-- Placeholder div pretending to be an image -->
+                <div class="card-shine"></div>
+                <div class="product-image-container">
+                    <img src="assets/ring.jpg" alt="Ring Polaroids" class="product-image">
                 </div>
                 <h3 class="product-title">RING POLAROIDS</h3>
-                <p class="product-price">$40</p>
-                <button class="btn-add-cart" data-name="RING POLAROIDS" data-price="40">Add to Cart</button>
-            </div>
-
-            <!-- Product 3 -->
-            <div class="product-card">
-                <div class="product-image placeholder-img-3">
-                    <!-- Placeholder div pretending to be an image -->
+                <div class="variant-selector">
+                    <button class="variant-btn active" data-pack="8" data-price="120">8 Pack</button>
+                    <button class="variant-btn" data-pack="12" data-price="169">12 Pack</button>
                 </div>
-                <h3 class="product-title">ACRYLIC MAGNET FRAMES</h3>
-                <p class="product-price">$60</p>
-                <button class="btn-add-cart" data-name="ACRYLIC MAGNET FRAMES" data-price="60">Add to Cart</button>
+                <p class="product-price">₹120</p>
+                <button class="btn-add-cart" data-name="RING POLAROIDS" data-price="120" data-pack="8">
+                    <span>Add to Cart</span>
+                </button>
             </div>
 
-            <!-- Product 4 -->
+            <!-- Product 3: Polaroids Bouquet -->
             <div class="product-card">
-                <div class="product-image placeholder-img-4">
-                    <!-- Placeholder div pretending to be an image -->
+                <div class="card-shine"></div>
+                <div class="product-image-container">
+                    <img src="assets/bouquet.jpg" alt="Polaroids Bouquet" class="product-image">
+                </div>
+                <h3 class="product-title">POLAROIDS BOUQUET</h3>
+                <div class="variant-selector">
+                    <button class="variant-btn active" data-pack="8" data-price="159">8 Pack</button>
+                    <button class="variant-btn" data-pack="12" data-price="259">12 Pack</button>
+                </div>
+                <p class="product-price">₹159</p>
+                <button class="btn-add-cart" data-name="POLAROIDS BOUQUET" data-price="159" data-pack="8">
+                    <span>Add to Cart</span>
+                </button>
+            </div>
+
+            <!-- Product 4: Strip Polaroids -->
+            <div class="product-card">
+                <div class="card-shine"></div>
+                <div class="product-image-container">
+                    <img src="assets/strip.jpg" alt="Strip Polaroids" class="product-image">
                 </div>
                 <h3 class="product-title">STRIP POLAROIDS</h3>
-                <p class="product-price">$60</p>
-                <button class="btn-add-cart" data-name="STRIP POLAROIDS" data-price="60">Add to Cart</button>
+                <div class="variant-selector">
+                    <button class="variant-btn active" data-pack="3" data-price="119">3 strips</button>
+                    <button class="variant-btn" data-pack="6" data-price="220">6 strips</button>
+                </div>
+                <p class="product-price">₹119</p>
+                <button class="btn-add-cart" data-name="STRIP POLAROIDS" data-price="119" data-pack="3">
+                    <span>Add to Cart</span>
+                </button>
+            </div>
+
+            <!-- Product 5: Stand Polaroids -->
+            <div class="product-card">
+                <div class="card-shine"></div>
+                <div class="product-image-container">
+                    <img src="assets/stand.jpg" alt="Stand Polaroids" class="product-image">
+                </div>
+                <h3 class="product-title">STAND POLAROIDS</h3>
+                <div class="variant-selector">
+                    <button class="variant-btn active" data-pack="8" data-price="189">8 mini</button>
+                    <button class="variant-btn" data-pack="4" data-price="239"> 4 max </button>
+                </div>
+                <p class="product-price">₹189</p>
+                <button class="btn-add-cart" data-name="STAND POLAROIDS" data-price="189" data-pack="8">
+                    <span>Add to Cart</span>
+                </button>
+            </div>
+
+            <!-- Product 6: Customised Polaroids -->
+            <div class="product-card">
+                <div class="card-shine"></div>
+                <div class="product-image-container">
+                    <img src="assets/customized.jpg" alt="Customised Polaroids" class="product-image">
+                </div>
+                <h3 class="product-title">CUSTOMISED POLAROIDS</h3>
+                <div class="variant-selector">
+                    <button class="variant-btn active" data-pack="8" data-price="359">8 Pack</button>
+                    <button class="variant-btn" data-pack="12" data-price="499">12 Pack</button>
+                </div>
+                <p class="product-price">₹359</p>
+                <button class="btn-add-cart" data-name="CUSTOMISED POLAROIDS" data-price="359" data-pack="8">
+                    <span>Add to Cart</span>
+                </button>
             </div>
         </div>
+
+        <!-- Live Preview Tool Section -->
+        <section class="live-preview-section">
+            <h2 class="section-title">Live Polaroid Preview</h2>
+            <div class="preview-container glass-morphism">
+                <div class="preview-controls">
+                    <h3> Polaroid Preview</h3>
+                    <p>Upload a photo to see how it looks as a Polaroid!</p>
+                    <label class="custom-file-upload">
+                        <input type="file" id="photo-upload" accept="image/*">
+                        <i class="fas fa-cloud-upload-alt"></i> Upload Photo
+                    </label>
+                </div>
+                <div class="preview-display">
+                    <div class="printing-slot">
+                        <div id="polaroid-frame" class="frame-mini">
+                            <div id="preview-image-holder">
+                                <span>Upload a photo to see the magic ✨</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- Cart Drawer Overlay -->
@@ -100,7 +188,7 @@
             <p class="empty-cart-msg"><i class="fas fa-box-open"></i><br>Your cart is empty!</p>
         </div>
         <div class="cart-drawer-footer" id="cart-footer" style="display:none;">
-            <div class="cart-total">Total: <strong id="cart-total-price">$0</strong></div>
+            <div class="cart-total">Total: <strong id="cart-total-price">₹0</strong></div>
             <button class="btn-submit" id="checkout-btn" style="margin-top:15px; width:100%;">Proceed to
                 Checkout</button>
         </div>
@@ -133,7 +221,62 @@
                     <input type="text" id="checkout-location" required placeholder="Area, City, Pincode">
                 </div>
 
-                <button type="submit" class="btn-submit">Place Order</button>
+                <!-- Order Details View -->
+                <div id="checkout-details-view">
+                    <div class="form-group advance-payment-section"
+                        style="background: rgba(142, 110, 203, 0.1); padding: 15px; border-radius: 12px; margin-top: 15px; text-align: center; border: 1px dashed var(--dark-lavender);">
+                        <p style="color: var(--dark-lavender); font-weight: 600; margin-bottom: 5px;">₹100 Advance
+                            Payment
+                            Required</p>
+                        <p style="font-size: 0.85rem; color: var(--text-muted);">Paid directly to UPI: chandu8341@sbi
+                        </p>
+                    </div>
+
+                    <button type="button" class="btn-submit" id="proceed-to-pay-btn" style="margin-top: 15px;">Proceed
+                        to Pay ₹100</button>
+                    <p style="font-size: 0.8rem; text-align: center; color: var(--text-muted); margin-top: 10px;">
+                        Remaining amount will be paid during delivery.</p>
+                </div>
+
+                <!-- UPI Payment View (Initially Hidden) -->
+                <div id="checkout-payment-view" style="display: none; text-align: center; margin-top: 15px;">
+                    <h3 style="color: var(--dark-pink); margin-bottom: 15px; font-size: 1.3rem;">Pay Advance to Confirm
+                    </h3>
+
+                    <div class="upi-qr-box">
+                        <p style="font-size: 0.9rem; font-weight: 600; color: var(--text-dark); margin-bottom: 10px;">
+                            Scan QR to Pay ₹100</p>
+                        <!-- QR Code Image Generator -->
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi%3A%2F%2Fpay%3Fpa%3Dchandu8341%40sbi%26pn%3DPixora%20CuteClicks%26am%3D100.00%26cu%3DINR%26tn%3DAdvance%20Payment"
+                            alt="UPI QR Code"
+                            style="border-radius: 12px; padding: 10px; background: white; border: 2px solid var(--border-color); width: 180px; height: 180px;">
+                        <p
+                            style="font-size: 0.85rem; color: var(--text-muted); margin-top: 5px; font-family: monospace;">
+                            UPI ID: chandu8341@sbi</p>
+                    </div>
+
+                    <a href="upi://pay?pa=chandu8341@sbi&pn=Pixora CuteClicks&am=100.00&cu=INR&tn=Advance Payment"
+                        class="btn-upi-mobile"
+                        style="display: none; margin: 15px auto; padding: 12px 25px; background: #00BA46; color: white; text-decoration: none; border-radius: 50px; font-weight: 600;">
+                        📱 Tap to Pay on Mobile
+                    </a>
+
+                    <div class="form-group" style="margin-top: 25px; text-align: left;">
+                        <label for="checkout-utr">Enter 12-Digit Reference No (UTR) <span
+                                style="color: red;">*</span></label>
+                        <input type="text" id="checkout-utr" placeholder="e.g. 312345678901" maxlength="12"
+                            minlength="12" pattern="\d{12}" title="Please enter a valid 12-digit UTR/Reference number">
+                        <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 5px;">Required for payment
+                            verification.</p>
+                    </div>
+
+                    <div style="display: flex; gap: 10px; margin-top: 20px;">
+                        <button type="button" class="btn-cancel" id="back-to-details-btn"
+                            style="flex: 1; padding: 12px; border-radius: 50px; border: 1px solid var(--dark-lavender); background: transparent; color: var(--dark-lavender); font-weight: 600; cursor: pointer;">Back</button>
+                        <button type="submit" class="btn-submit" id="pay-confirm-btn" style="flex: 2;">Confirm
+                            Order</button>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
@@ -143,59 +286,31 @@
         <div class="order-confirm-card">
             <div class="order-confirm-icon">🎉</div>
             <h2>Order Placed!</h2>
-            <p class="order-confirm-sub">Thank you! Here is your order summary:</p>
-
+            <p class="order-confirm-sub">Your Polaroids are on their way! 💜</p>
             <div class="order-tracking-box">
                 <div class="order-info-row">
                     <span class="order-label">Order ID</span>
-                    <span class="order-value" id="conf-order-id">#—</span>
-                </div>
-                <div class="order-info-row">
-                    <span class="order-label">Product</span>
-                    <span class="order-value" id="conf-product">—</span>
-                </div>
-                <div class="order-info-row">
-                    <span class="order-label">Amount</span>
-                    <span class="order-value" id="conf-price">—</span>
-                </div>
-                <div class="order-info-row">
-                    <span class="order-label">Delivery To</span>
-                    <span class="order-value" id="conf-location">—</span>
+                    <span class="order-value" id="conf-order-id">#0000</span>
                 </div>
                 <div class="order-info-row">
                     <span class="order-label">Status</span>
-                    <span class="order-value"><span class="status-badge">✅ Order Placed</span></span>
-                </div>
-                <div class="order-info-row">
-                    <span class="order-label">Est. Delivery</span>
-                    <span class="order-value">3–5 Business Days</span>
+                    <span class="status-badge">Received</span>
                 </div>
             </div>
-
-            <!-- Visual Tracking Steps -->
-            <div class="order-status-track">
-                <div class="track-step done">
-                    <div class="track-dot"></div><span>Placed</span>
-                </div>
-                <div class="track-line done"></div>
-                <div class="track-step">
-                    <div class="track-dot"></div><span>Confirmed</span>
-                </div>
-                <div class="track-line"></div>
-                <div class="track-step">
-                    <div class="track-dot"></div><span>Shipped</span>
-                </div>
-                <div class="track-line"></div>
-                <div class="track-step">
-                    <div class="track-dot"></div><span>Delivered</span>
-                </div>
-            </div>
-
             <p class="order-confirm-note">📸 For queries, DM us on Instagram!<br>We will deliver your Polaroids with
                 love 💜</p>
             <button class="btn-submit" onclick="closeConfirmation()">Continue Shopping</button>
         </div>
-    </div>
+    </div> <!-- Bottom Note Section -->
+    <section style="text-align: center; padding: 60px 20px; max-width: 600px; margin: 0 auto;">
+        <p class="order-confirm-note" style="font-size: 1.1rem; line-height: 2; color: var(--text-secondary);">
+            📸 For queries, DM us on Instagram!<br>We will deliver your Polaroids with love 💜
+        </p>
+        <a href="index.html" class="btn-submit"
+            style="display: inline-block; margin-top: 20px; text-decoration: none; padding: 14px 40px; border-radius: 50px; background: var(--dark-lavender); color: white; font-weight: 600;">Continue
+            Shopping</a>
+    </section>
+
 
     <script src="script.js"></script>
 </body>
