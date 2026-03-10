@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Our Products - Pixora CuteClicks</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,13 +18,30 @@
 
 <body class="products-body page-fade">
     <div id="cursor-glow"></div>
+    <!-- Mobile Bottom Navigation -->
+    <nav class="mobile-bottom-nav">
+        <a href="index.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="products.html" class="nav-item active">
+            <i class="fas fa-box-open"></i>
+            <span>Products</span>
+        </a>
+        <a href="#" class="nav-item cart-icon-container" id="mobile-cart-btn" style="position: relative;">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-badge mobile-badge">0</span>
+            <span>Cart</span>
+        </a>
+    </nav>
     <div class="shutter-overlay" id="shutter"></div>
     <nav class="navbar solid-nav">
         <div class="nav-container">
-            <h1 class="logo">Pixora CuteClicks</h1>
+            <h1 class="logo">Pixora_Cute.Clicks</h1>
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="products.html" class="active">Products</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
                 <li>
                     <a href="#" class="cart-icon-container" onclick="toggleCart(event)">
                         <i class="fas fa-shopping-cart"></i>

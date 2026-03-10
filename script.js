@@ -191,6 +191,15 @@ const checkoutBtn = document.getElementById('checkout-btn');
 // Initialize on page load
 updateCartBadge();
 
+// ---- Mobile Drawer Listeners ----
+const mobileCartBtn = document.getElementById('mobile-cart-btn');
+if (mobileCartBtn) {
+    mobileCartBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        toggleCart();
+    });
+}
+
 // ---- Cart Drawer Toggle ----
 function toggleCart(e) {
     if (e) e.preventDefault();
@@ -255,6 +264,16 @@ function changeQty(index, delta) {
 function updateCartBadge() {
     const count = cart.reduce((sum, item) => sum + item.qty, 0);
     if (cartCounterEl) cartCounterEl.innerText = count;
+
+    // Update mobile badges
+    const mobileBadges = document.querySelectorAll('.mobile-badge');
+    mobileBadges.forEach(badge => {
+        badge.innerText = count;
+        // Pulse animation
+        badge.classList.remove('pulse-active');
+        void badge.offsetWidth; // trigger reflow
+        badge.classList.add('pulse-active');
+    });
 }
 
 // ---- Persist Cart ----
