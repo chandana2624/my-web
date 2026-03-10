@@ -90,7 +90,7 @@
             // Login Logic
             loginForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                const password = document.getElementById('admin-password').value;
+                const password = document.getElementById('admin-password').value.trim();
                 loginError.textContent = '';
 
                 try {
