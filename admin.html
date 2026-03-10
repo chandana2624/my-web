@@ -58,6 +58,7 @@
                             <th>Delivery Location</th>
                             <th>Product</th>
                             <th>Price</th>
+                            <th>Payment ID</th>
                             <th>Status</th>
                         </tr>
                     </thead>
@@ -177,7 +178,8 @@
                         <td>${escapeHTML(order.contact_number)}</td>
                         <td>${escapeHTML(order.delivery_location || '—')}</td>
                         <td>${escapeHTML(order.product_name)}</td>
-                        <td style="color:#2e7d32; font-weight:600;">$${order.price}</td>
+                        <td style="color:#2e7d32; font-weight:600;">₹${order.price}</td>
+                        <td><code style="background:#f0f0f0; padding:2px 5px; border-radius:4px;">${escapeHTML(order.payment_id || '—')}</code></td>
                         <td><span style="background:#e8f5e9; color:#2e7d32; padding:3px 8px; border-radius:12px; font-size:0.8rem;">${order.status}</span></td>
                     </tr>
                 `).join('');
