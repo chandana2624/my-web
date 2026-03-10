@@ -232,7 +232,7 @@ app.post('/api/admin/login', (req, res) => {
     if (password && password.trim() === 'chandulavv0604') {
         res.json({ success: true, token: 'admin-token-123' });
     } else {
-        res.status(401).json({ success: false, error: 'Incorrect password.' });
+        res.status(401).json({ success: false, error: 'Access Denied: Incorrect Password.' });
     }
 });
 
