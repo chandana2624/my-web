@@ -80,7 +80,7 @@
             const logoutBtnContainer = document.getElementById('logout-btn-container');
             const refreshBtn = document.getElementById('refresh-orders');
 
-            let authToken = localStorage.getItem('adminToken');
+            let authToken = sessionStorage.getItem('adminToken');
 
             // Quick check if already logged in
             if (authToken) {
@@ -108,7 +108,7 @@
 
                     if (data.success) {
                         authToken = data.token;
-                        localStorage.setItem('adminToken', authToken);
+                        sessionStorage.setItem('adminToken', authToken);
                         showDashboard();
                     } else {
                         loginError.textContent = data.error || 'Login failed';
@@ -121,7 +121,7 @@
             // Logout Logic
             document.getElementById('admin-logout').addEventListener('click', (e) => {
                 e.preventDefault();
-                localStorage.removeItem('adminToken');
+                sessionStorage.removeItem('adminToken');
                 authToken = null;
                 loginSection.style.display = 'block';
                 dashboardSection.style.display = 'none';
