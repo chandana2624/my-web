@@ -1998,3 +1998,36 @@ body {
         display: none;
     }
 }
+
+/* --- Footer Styles --- */
+.main-footer {
+    padding: 30px 20px;
+    background: white;
+    text-align: center;
+    border-top: 1px solid var(--wash-lavender);
+    margin-top: 100px;
+}
+
+.footer-container p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.owner-link {
+    color: var(--dark-pink);
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.owner-link:hover {
+    text-decoration: underline;
+}
+
+/* Ensure footer doesn't get covered by mobile nav */
+@media (max-width: 768px) {
+    .main-footer {
+        padding-bottom: 100px;
+        /* Extra room for bottom nav */
+    }
+}
