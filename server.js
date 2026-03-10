@@ -227,12 +227,16 @@ app.get('/api/orders', async (req, res) => {
 
 // Admin Authentication endpoint
 app.post('/api/admin/login', (req, res) => {
-    const { password } = req.body;
-    // Hardcoded simple password for owner dashboard
+    const { password } = req.body || {};
+    // Debugging login issue on live site
     if (password && password.trim() === 'chandulavv0604') {
         res.json({ success: true, token: 'admin-token-123' });
     } else {
-        res.status(401).json({ success: false, error: 'Access Denied: Incorrect Password.' });
+        const receivedLen = password ? password.length : 0;
+        res.status(401).json({
+            success: false,
+            error: `Access Denied: Incorrect Password (${receivedLen} chars received).`
+        });
     }
 });
 
