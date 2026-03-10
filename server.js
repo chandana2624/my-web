@@ -7,6 +7,9 @@ const { createClient } = require('@supabase/supabase-js');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Export app for Netlify Functions
+module.exports = app;
+
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -233,7 +236,9 @@ app.post('/api/admin/login', (req, res) => {
     }
 });
 
-// Start Server
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
+// Start Server (only if running directly)
+if (require.main === module) {
+    app.listen(PORT, () => {
+        console.log(`Server is running on http://localhost:${PORT}`);
+    });
+}
