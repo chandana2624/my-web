@@ -260,30 +260,49 @@ app.get('/api/orders', async (req, res) => {
 
 // Admin Authentication endpoint
 app.post('/api/admin/login', (req, res) => {
-    // Netlify/Serverless can sometimes pass the body as a Buffer object or a JSON representation of a Buffer
-    let body = req.body;
+    // 1. Try to find password in Headers (most reliable in serverless)
+    let pwd = req.headers['x-admin-password'];
     
-    // Check if body is in the {"type":"Buffer", "data":[...]} format
-    if (body && body.type === 'Buffer' && Array.isArray(body.data)) {
-        try {
-            const buf = Buffer.from(body.data);
-            body = JSON.parse(buf.toString());
-        } catch (e) {
-            console.error('Failed to parse Buffer body:', e);
+    // 2. Try to find in Body
+    let body = req.body;
+    if (!pwd && body) {
+        // If body is the Buffer object from debug
+        if (body.type === 'Buffer' && Array.isArray(body.data)) {
+            try {
+                const decoded = JSON.parse(Buffer.from(body.data).toString());
+                pwd = decoded.password;
+            } catch (e) {}
+        } else if (typeof body === 'string') {
+            try {
+                const decoded = JSON.parse(body);
+                pwd = decoded.password;
+            } catch (e) {
+                // If the body IS the password string
+                if (body.length > 5) pwd = body;
+            }
+        } else if (body.password) {
+            pwd = body.password;
         }
-    } else if (typeof body === 'string') {
-        try { body = JSON.parse(body); } catch (e) { body = {}; }
     }
     
-    const pwd = (body && body.password) ? body.password : (req.query ? req.query.password : null);
-    
+    // 3. Try to find in Query (last resort)
+    if (!pwd && req.query && req.query.password) {
+        pwd = req.query.password;
+    }
+
     if (pwd && pwd.trim() === 'chandulavv0604') {
         res.json({ success: true, token: 'admin-token-123' });
     } else {
-        const receivedLen = pwd ? pwd.length : 0;
+        const debugInfo = {
+            hasBody: !!body,
+            bodyType: typeof body,
+            bodyKeys: body ? Object.keys(body) : [],
+            receivedLen: pwd ? pwd.length : 0,
+            hasHeader: !!req.headers['x-admin-password']
+        };
         res.status(401).json({ 
             success: false, 
-            error: `Access Denied: Incorrect Password (${receivedLen} chars received)` 
+            error: `Deny: ${debugInfo.receivedLen} chars. Debug: ${JSON.stringify(debugInfo)}` 
         });
     }
 });
