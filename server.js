@@ -260,22 +260,30 @@ app.get('/api/orders', async (req, res) => {
 
 // Admin Authentication endpoint
 app.post('/api/admin/login', (req, res) => {
-    // Robustly try to find the password in body or query
+    // Netlify/Serverless can sometimes pass the body as a Buffer object or a JSON representation of a Buffer
     let body = req.body;
-    if (typeof body === 'string') {
+    
+    // Check if body is in the {"type":"Buffer", "data":[...]} format
+    if (body && body.type === 'Buffer' && Array.isArray(body.data)) {
+        try {
+            const buf = Buffer.from(body.data);
+            body = JSON.parse(buf.toString());
+        } catch (e) {
+            console.error('Failed to parse Buffer body:', e);
+        }
+    } else if (typeof body === 'string') {
         try { body = JSON.parse(body); } catch (e) { body = {}; }
     }
+    
     const pwd = (body && body.password) ? body.password : (req.query ? req.query.password : null);
     
-    // Final check
     if (pwd && pwd.trim() === 'chandulavv0604') {
         res.json({ success: true, token: 'admin-token-123' });
     } else {
         const receivedLen = pwd ? pwd.length : 0;
-        const bodyDebug = JSON.stringify(body || {}).substring(0, 50);
         res.status(401).json({ 
             success: false, 
-            error: `Access Denied: Incorrect Password (${receivedLen} chars, body: ${bodyDebug})` 
+            error: `Access Denied: Incorrect Password (${receivedLen} chars received)` 
         });
     }
 });
