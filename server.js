@@ -1,5 +1,10 @@
 const express = require('express');
-const sqlite3 = require('sqlite3').verbose();
+let sqlite3;
+try {
+    sqlite3 = require('sqlite3').verbose();
+} catch (e) {
+    console.log('sqlite3 module not found, continuing without local database.');
+}
 const cors = require('cors');
 const path = require('path');
 const { createClient } = require('@supabase/supabase-js');
@@ -14,7 +19,10 @@ module.exports = app;
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname))); // Serve static files from current directory
+// Static files are served by Netlify directly, so we don't need express.static here for the cloud deployment
+if (process.env.NODE_ENV !== 'production') {
+    app.use(express.static(path.join(__dirname)));
+}
 
 // Supabase Setup (Cloud Persistence)
 const SUPABASE_URL = process.env.SUPABASE_URL;
@@ -29,30 +37,32 @@ if (SUPABASE_URL && SUPABASE_KEY) {
 }
 
 // Database Setup
-const db = new sqlite3.Database('./database.sqlite', (err) => {
-    if (err) {
-        console.error('Error opening database', err.message);
-    } else {
-        console.log('Connected to the SQLite database.');
-        // Create customers table if it doesn't exist
-        db.run(`CREATE TABLE IF NOT EXISTS customers (
+let db = null;
+if (sqlite3) {
+    db = new sqlite3.Database('./database.sqlite', (err) => {
+        if (err) {
+            console.error('Error opening database', err.message);
+        } else {
+            console.log('Connected to the SQLite database.');
+            // Create customers table if it doesn't exist
+            db.run(`CREATE TABLE IF NOT EXISTS customers (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
             email TEXT NOT NULL,
             message TEXT,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP
         )`, (err) => {
-            if (err) {
-                console.error('Error creating customers table', err.message);
-            } else {
-                console.log('Customers table ready.');
-            }
-        });
+                if (err) {
+                    console.error('Error creating customers table', err.message);
+                } else {
+                    console.log('Customers table ready.');
+                }
+            });
 
-        // Because we are modifying the schema, we'll try to add columns or just drop/recreate for simplicity in dev.
-        // For safe dev environment reset: Drop table and recreate it.
-        db.run('DROP TABLE IF EXISTS orders', (err) => {
-            db.run(`CREATE TABLE orders (
+            // Because we are modifying the schema, we'll try to add columns or just drop/recreate for simplicity in dev.
+            // For safe dev environment reset: Drop table and recreate it.
+            db.run('DROP TABLE IF EXISTS orders', (err) => {
+                db.run(`CREATE TABLE orders (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 customer_name TEXT NOT NULL,
                 customer_email TEXT NOT NULL,
@@ -64,14 +74,25 @@ const db = new sqlite3.Database('./database.sqlite', (err) => {
                 status TEXT DEFAULT 'Order Placed',
                 created_at DATETIME DEFAULT CURRENT_TIMESTAMP
             )`, (err) => {
-                if (err) {
-                    console.error('Error creating orders table', err.message);
-                } else {
-                    console.log('Orders table ready with location tracking.');
-                }
+                    if (err) {
+                        console.error('Error creating orders table', err.message);
+                    } else {
+                        console.log('Orders table ready with location tracking.');
+                    }
+                });
             });
-        });
-    }
+        }
+    });
+}
+
+// Health Check Endpoint
+app.get('/api/health', (req, res) => {
+    res.json({
+        status: 'ok',
+        supabase: !!supabase,
+        sqlite: !!db,
+        timestamp: new Date().toISOString()
+    });
 });
 
 // API Endpoints
@@ -123,13 +144,17 @@ app.get('/api/customers', async (req, res) => {
         return res.json(data);
     }
 
-    db.all('SELECT * FROM customers ORDER BY created_at DESC', [], (err, rows) => {
-        if (err) {
-            console.error('Error fetching customers:', err.message);
-            return res.status(500).json({ error: 'Failed to fetch customer data.' });
-        }
-        res.json(rows);
-    });
+    if (db) {
+        db.all('SELECT * FROM customers ORDER BY created_at DESC', [], (err, rows) => {
+            if (err) {
+                console.error('Error fetching customers:', err.message);
+                return res.status(500).json({ error: 'Failed to fetch customer data.' });
+            }
+            res.json(rows);
+        });
+    } else {
+        res.status(500).json({ error: 'Local database not available.' });
+    }
 });
 
 // Orders Endpoints
@@ -174,26 +199,30 @@ app.post('/api/orders', async (req, res) => {
         });
     }
 
-    const sql = 'INSERT INTO orders (customer_name, customer_email, contact_number, delivery_location, product_name, price, payment_id) VALUES (?, ?, ?, ?, ?, ?, ?)';
-    db.run(sql, [customerName, customerEmail, contactNumber, deliveryLocation, productName, price, paymentId], function (err) {
-        if (err) {
-            console.error('Error inserting order:', err.message);
-            return res.status(500).json({ error: 'Failed to save order.' });
-        }
-        res.status(201).json({
-            message: 'Order placed successfully!',
-            orderId: this.lastID,
-            orderDetails: {
-                id: this.lastID,
-                product: productName,
-                price: price,
-                customerName: customerName,
-                paymentId: paymentId,
-                status: 'Order Placed',
-                estimatedDelivery: '3-5 business days'
+    if (db) {
+        const sql = 'INSERT INTO orders (customer_name, customer_email, contact_number, delivery_location, product_name, price, payment_id) VALUES (?, ?, ?, ?, ?, ?, ?)';
+        db.run(sql, [customerName, customerEmail, contactNumber, deliveryLocation, productName, price, paymentId], function (err) {
+            if (err) {
+                console.error('Error inserting order:', err.message);
+                return res.status(500).json({ error: 'Failed to save order.' });
             }
+            res.status(201).json({
+                message: 'Order placed successfully!',
+                orderId: this.lastID,
+                orderDetails: {
+                    id: this.lastID,
+                    product: productName,
+                    price: price,
+                    customerName: customerName,
+                    paymentId: paymentId,
+                    status: 'Order Placed',
+                    estimatedDelivery: '3-5 business days'
+                }
+            });
         });
-    });
+    } else {
+        res.status(500).json({ error: 'Local database not available for orders.' });
+    }
 });
 
 app.get('/api/orders', async (req, res) => {
@@ -216,13 +245,17 @@ app.get('/api/orders', async (req, res) => {
         return res.json(data);
     }
 
-    db.all('SELECT * FROM orders ORDER BY created_at DESC', [], (err, rows) => {
-        if (err) {
-            console.error('Error fetching orders:', err.message);
-            return res.status(500).json({ error: 'Failed to fetch orders.' });
-        }
-        res.json(rows);
-    });
+    if (db) {
+        db.all('SELECT * FROM orders ORDER BY created_at DESC', [], (err, rows) => {
+            if (err) {
+                console.error('Error fetching orders:', err.message);
+                return res.status(500).json({ error: 'Failed to fetch orders.' });
+            }
+            res.json(rows);
+        });
+    } else {
+        res.status(500).json({ error: 'Local database not available for orders.' });
+    }
 });
 
 // Admin Authentication endpoint
