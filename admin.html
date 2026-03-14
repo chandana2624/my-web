@@ -98,6 +98,7 @@
                         ? 'http://localhost:3000/api/admin/login'
                         : '/api/admin/login';
 
+                    console.log('Attempting login with password length:', password.length);
                     const response = await fetch(finalUrl, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
